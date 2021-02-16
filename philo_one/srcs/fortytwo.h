@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fortytwo.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soohchoi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: soohyun <soohyun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 23:00:47 by soohchoi          #+#    #+#             */
-/*   Updated: 2021/02/12 23:00:52 by soohchoi         ###   ########.fr       */
+/*   Updated: 2021/02/17 02:34:50 by soohyun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ typedef struct		s_bocal
 /*
 **					life_of_cadet.c
 */
-int					weekly_report(t_cadet *cadet, int content);
+void				cadet_code_n_sleep_last(t_cadet *cadet);
+void				cadet_code_n_sleep(t_cadet *cadet);
+void				*life_of_cadet_last(void *data);
+void				*life_of_cadet(void *data);
 int					move_it_cadet(t_bocal *polabear);
 
 /*
@@ -70,6 +73,8 @@ int					ft_atoi(const char *str);
 /*
 **					monitor.c
 */
+int					weekly_report(t_cadet *cadet, int content);
+void				*call_from_bocal(void *data);
 int					cadet_inspection(t_bocal *polarbear);
 
 #endif

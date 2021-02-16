@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   life_of_cadet.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soohchoi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: soohyun <soohyun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 23:00:58 by soohchoi          #+#    #+#             */
-/*   Updated: 2021/02/17 02:30:39 by soohchoi         ###   ########.fr       */
+/*   Updated: 2021/02/17 03:00:13 by soohyun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
-
-int				weekly_report(t_cadet *cadet, int content)
-{
-	pthread_mutex_lock(cadet->right_to_report);
-	if (content == CONTENT_SUCCESS)
-	{
-		printf("everybody have enough meal!\n");
-		return (1);
-	}
-	printf("%lums", relative_time(cadet->time_start) / 1000);
-	if (content == CONTENT_SUCCESS)
-		return (CONTENT_SUCCESS);
-	else if (content == CONTENT_KEYBOARD)
-		printf(" %d has taken a fork\n", cadet->number);
-	else if (content == CONTENT_CODING)
-		printf(" %d is eating\n", cadet->number);
-	else if (content == CONTENT_SLEEP)
-		printf(" %d is sleeping\n", cadet->number);
-	else if (content == CONTENT_OASIS)
-		printf(" %d is thinking\n", cadet->number);
-	else if (content == CONTENT_BLACKHOLE)
-	{
-		printf(" %d is died\n", cadet->number);
-		return (1);
-	}
-	pthread_mutex_unlock(cadet->right_to_report);
-	return (0);
-}
 
 void			cadet_code_n_sleep_last(t_cadet *cadet)
 {
@@ -76,6 +48,15 @@ void			cadet_code_n_sleep(t_cadet *cadet)
 	weekly_report(cadet, CONTENT_OASIS);
 }
 
+void			*life_of_cadet_last(void *data)
+{
+	t_cadet		*cadet;
+
+	cadet = data;
+	while (42)
+		cadet_code_n_sleep_last(cadet);
+}
+
 void			*life_of_cadet(void *data)
 {
 	t_cadet		*cadet;
@@ -97,7 +78,7 @@ int				move_it_cadet(t_bocal *polarbear)
 		pthread_detach(th_cadet[i]);
 		i += 2;
 	}
-	usleep(1000);
+	usleep(100);
 	i = 1;
 	while (i < polarbear->num_of_cadet - 1)
 	{
@@ -106,7 +87,7 @@ int				move_it_cadet(t_bocal *polarbear)
 		i += 2;
 	}
 	i = polarbear->num_of_cadet - 1;
-	pthread_create(&th_cadet[i], 0, life_of_cadet, &polarbear->cadet[i]);
+	pthread_create(&th_cadet[i], 0, life_of_cadet_last, &polarbear->cadet[i]);
 	pthread_detach(th_cadet[i]);
 	return (0);
 }

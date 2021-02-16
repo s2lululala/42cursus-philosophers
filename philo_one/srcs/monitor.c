@@ -3,14 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: soohchoi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: soohyun <soohyun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 23:01:05 by soohchoi          #+#    #+#             */
-/*   Updated: 2021/02/12 23:01:08 by soohchoi         ###   ########.fr       */
+/*   Updated: 2021/02/17 02:36:12 by soohyun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
+
+int				weekly_report(t_cadet *cadet, int content)
+{
+	pthread_mutex_lock(cadet->right_to_report);
+	if (content == CONTENT_SUCCESS)
+	{
+		printf("everybody have enough meal!\n");
+		return (1);
+	}
+	printf("%lums %lums", relative_time(cadet->time_start) / 1000, relative_time(cadet->time_last_code) / 1000);
+	if (content == CONTENT_SUCCESS)
+		return (CONTENT_SUCCESS);
+	else if (content == CONTENT_KEYBOARD)
+		printf(" %d has taken a fork\n", cadet->number);
+	else if (content == CONTENT_CODING)
+		printf(" %d is eating\n", cadet->number);
+	else if (content == CONTENT_SLEEP)
+		printf(" %d is sleeping\n", cadet->number);
+	else if (content == CONTENT_OASIS)
+		printf(" %d is thinking\n", cadet->number);
+	else if (content == CONTENT_BLACKHOLE)
+	{
+		printf(" %d is died\n", cadet->number);
+		return (1);
+	}
+	pthread_mutex_unlock(cadet->right_to_report);
+	return (0);
+}
 
 void				*call_from_bocal(void *data)
 {
