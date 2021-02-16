@@ -6,13 +6,13 @@
 /*   By: soohyun <soohyun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 23:01:05 by soohchoi          #+#    #+#             */
-/*   Updated: 2021/02/17 02:36:12 by soohyun          ###   ########.fr       */
+/*   Updated: 2021/02/17 03:12:13 by soohyun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwo.h"
 
-int				weekly_report(t_cadet *cadet, int content)
+int					weekly_report(t_cadet *cadet, int content)
 {
 	pthread_mutex_lock(cadet->right_to_report);
 	if (content == CONTENT_SUCCESS)
@@ -20,7 +20,7 @@ int				weekly_report(t_cadet *cadet, int content)
 		printf("everybody have enough meal!\n");
 		return (1);
 	}
-	printf("%lums %lums", relative_time(cadet->time_start) / 1000, relative_time(cadet->time_last_code) / 1000);
+	printf("%lums", relative_time(cadet->time_start) / 1000);
 	if (content == CONTENT_SUCCESS)
 		return (CONTENT_SUCCESS);
 	else if (content == CONTENT_KEYBOARD)
