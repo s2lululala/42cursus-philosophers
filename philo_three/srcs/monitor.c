@@ -6,7 +6,7 @@
 /*   By: soohyun <soohyun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 00:57:19 by soohchoi          #+#    #+#             */
-/*   Updated: 2021/02/17 04:19:06 by soohyun          ###   ########.fr       */
+/*   Updated: 2021/02/17 12:03:55 by soohchoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				cadet_inspection(t_bocal *polarbear)
 	i = 0;
 	usleep(200);
 	pthread_create(&jiwongeum, 0, send_jiwongeum, polarbear);
-	pthread_join(jiwongeum);
+	pthread_detach(jiwongeum);
 	while (42)
 	{
 		if (waitpid(polarbear->pid_cadet[i], &polarbear->state[i], \
